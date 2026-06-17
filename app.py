@@ -96,6 +96,7 @@ def api_logout():
         _logged_in_users.discard(username)
 
     session.clear()
+    session.modified = True
 
     resp = jsonify({"message": "Disconnected successfully"})
     resp.set_cookie("access_token", "", expires=0)
