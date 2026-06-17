@@ -63,3 +63,11 @@ def rate_limit(f):
         rate_limiter.register()
         return f(*args, **kwargs)
     return decorated
+
+    def window_remaining(self) -> float:
+        key = self._key()
+        self._clean(key)
+        if not self._attempts[key]:
+            return float(Config.RATE_LIMIT_WINDOW)
+        elapsed = time.time() - self._attempts[key][0]
+        return max(0.0, Config.RATE_LIMIT_WINDOW - elapsed)
