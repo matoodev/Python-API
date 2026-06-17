@@ -1,5 +1,6 @@
 import time
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session, make_response
+# from flask_cors import CORS
 
 from config import Config
 from auth import check_password, create_jwt, decode_jwt, login_required, hash_password
