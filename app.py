@@ -11,6 +11,7 @@ app.secret_key = Config.SECRET_KEY
 
 _hashed_admin = hash_password(Config.ADMIN_PASSWORD)
 _logged_in_users: set[str] = set()
+_start_time = time.time()
 
 
 @app.route("/")
@@ -128,3 +129,12 @@ def internal_error(e):
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5777, debug=False)
+
+
+@app.route("/api/health", methods=["GET"])
+def api_health():
+    return jsonify({
+        "status": "ok",
+        "uptime": time.time() - _start_time,
+        "active_sessions": len(_logged_in_users),
+    })
